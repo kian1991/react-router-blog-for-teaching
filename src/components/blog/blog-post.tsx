@@ -1,6 +1,17 @@
-import { BlogPost as BPost } from "../../pages/blog";
+import { useState } from "react";
+import { usePageStore } from "../../store/page-store";
+import { BlogPost as BPost } from "../../types";
+import { cn } from "../../lib/utils";
 
 export function BlogPost({ post }: { post: BPost }) {
+  const likePost = usePageStore((state) => state.likePost);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  function handleLike() {
+    likePost(post.id);
+    setIsAnimating(true);
+    setTimeout(() => setIsAnimating(false), 300);
+  }
   return (
     <li
       key={post.id}
@@ -15,13 +26,22 @@ export function BlogPost({ post }: { post: BPost }) {
       <p className="mb-2 text-neutral-800">{post.text}</p>
       <div className="flex items-start justify-between">
         <p className="text-sm text-neutral-600">{post.date}</p>
-        <button className="flex items-center gap-2">
-          <span className="text-sm italic text-neutral-700">{post.likes}</span>
+        <button className="flex items-center gap-2" onClick={handleLike}>
+          <span
+            className={cn(
+              "text-sm italic text-neutral-700",
+              isAnimating && "animate-pop",
+            )}
+          >
+            {post.likes}
+          </span>
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            className={`size-8 fill-red-500/50 stroke-none transition-all ease-linear after:ml-1 after:text-sm after:text-neutral-700 after:content-[data-likes] hover:scale-110`}
+            className={cn(
+              `size-8 fill-red-500/50 stroke-none transition-all ease-linear hover:fill-red-500/80`,
+            )}
           >
             <path
               stroke-linecap="round"
