@@ -1,6 +1,6 @@
 import { BlogPost } from "../types";
 
-export const blogPosts: BlogPost[] = [
+export const initialPosts: BlogPost[] = [
   {
     id: 1,
     title: "Das Geheimnis der Schwarzen Löcher",

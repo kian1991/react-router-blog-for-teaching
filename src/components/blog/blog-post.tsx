@@ -4,7 +4,7 @@ import { BlogPost as BPost } from "../../types";
 import { cn } from "../../lib/utils";
 
 export function BlogPost({ post }: { post: BPost }) {
-  const likePost = usePageStore((state) => state.likePost);
+  const likePost = usePageStore((state) => state.addLike);
   const [isAnimating, setIsAnimating] = useState(false);
 
   function handleLike() {
