@@ -8,11 +8,14 @@ import { Home } from "./pages/home";
 import { App } from "./app";
 import { User } from "./pages/user";
 import { Blog } from "./pages/blog";
+import { BlogPostDetail } from "./pages/blog-post-detail";
+import { ErrorBoundary } from "./pages/error";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorBoundary />,
     children: [
       {
         path: "",
@@ -29,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "/blog",
         element: <Blog />,
+      },
+      {
+        path: "/blog/:postId",
+        element: <BlogPostDetail />,
       },
       {
         path: "/user/:id",

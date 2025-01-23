@@ -2,12 +2,19 @@ import { useState } from "react";
 import { usePageStore } from "../../store/page-store";
 import { BlogPost as BPost } from "../../types";
 import { cn } from "../../lib/utils";
+import { useNavigate } from "react-router-dom";
 
 export function BlogPost({ post }: { post: BPost }) {
   const likePost = usePageStore((state) => state.addLike);
   const [isAnimating, setIsAnimating] = useState(false);
+  const navigate = useNavigate();
 
-  function handleLike() {
+  function handleClick() {
+    navigate(`/blog/${post.id}`);
+  }
+
+  function handleLike(e: React.MouseEvent) {
+    e.stopPropagation(); // Prevent Event Bubbling!
     likePost(post.id);
     setIsAnimating(true);
     setTimeout(() => setIsAnimating(false), 300);
@@ -15,7 +22,8 @@ export function BlogPost({ post }: { post: BPost }) {
   return (
     <li
       key={post.id}
-      className="mb-4 flex flex-col border-t border-neutral-300 p-3"
+      onClick={handleClick}
+      className="mb-4 flex cursor-pointer flex-col border-t border-neutral-300 p-3 transition-all delay-75 duration-200 hover:scale-[1.02]"
     >
       <span className="ml-auto w-fit rounded-sm bg-sky-400 px-2 font-mono text-sm font-bold text-black">
         {post.tag}
