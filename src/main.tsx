@@ -10,6 +10,8 @@ import { User } from "./pages/user";
 import { Blog } from "./pages/blog";
 import { BlogPostDetail } from "./pages/blog-post-detail";
 import { ErrorBoundary } from "./pages/error";
+import { Shop } from "./pages/shop";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const router = createBrowserRouter([
   {
@@ -41,12 +43,20 @@ const router = createBrowserRouter([
         path: "/user/:id",
         element: <User />,
       },
+      {
+        path: "/shop",
+        element: <Shop />,
+      },
     ],
   },
 ]);
 
+const queryClient = new QueryClient();
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   </StrictMode>,
 );
